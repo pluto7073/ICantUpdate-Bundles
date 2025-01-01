@@ -45,6 +45,7 @@ dependencies {
 	modLocalRuntime("maven.modrinth:cloth-config:$cloth_config_version") { exclude(group: "net.fabricmc.fabric-api") }
 	modLocalRuntime("maven.modrinth:jade:$jade_version")
 	modLocalRuntime("com.terraformersmc:modmenu:$modmenu_version") { exclude(group: "net.fabricmc"); exclude(group: "net.fabricmc.fabric-api") }
+	modLocalRuntime("maven.modrinth:kiwi:$kiwi_version")
 
 	// Don't wanna have more than one at once
 	switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
@@ -71,15 +72,11 @@ sourceSets {
 			exclude(".cache")
 		}
 	}
-	testmod {
-		compileClasspath += main.compileClasspath
-		compileClasspath += main.output
-		runtimeClasspath += main.runtimeClasspath
-		runtimeClasspath += main.output
-	}
 }
 
 loom {
+
+	accessWidenerPath = file("src/main/resources/icu_bundles.accesswidener")
 
 	runs {
 		configureEach {
@@ -99,20 +96,6 @@ loom {
 
 		server {
 			runDir "run/server"
-		}
-
-		testmodClient {
-			client()
-			name "Testmod Client"
-			source sourceSets.testmod
-			runDir "run/test"
-		}
-
-		testmodServer {
-			server()
-			name "Testmod Server"
-			source sourceSets.testmod
-			runDir "run/test_server"
 		}
 	}
 

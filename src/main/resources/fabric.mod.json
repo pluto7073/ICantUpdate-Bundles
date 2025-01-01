@@ -1,35 +1,36 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "icu_bundles",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "I Can't Update - Bundles of Bravery",
+	"description": "Backports most of the new bundle features to 1.20.1 for those who can't update cause of other mods",
 	"authors": [
-		"Me!"
+		"Pluto7073"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/Pluto7073/plutos-example-mod"
 	},
 	"license": "MIT",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/icu_bundles/icon.png",
+	"accesswidener": "icu_bundles.accesswidener",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"ml.pluto7073.icu.bundles.BundlesOfBravery"
 		],
 		"client": [
-			"com.example.client.ExampleModClient"
+			"ml.pluto7073.icu.bundles.client.BundlesOfClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json"
+		"icu_bundles.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=${loader_version}",
 		"minecraft": "~${minecraft_version}",
 		"java": ">=17",
-		"fabric-api": ">=${fabric_api_version"
+		"fabric-api": ">=${fabric_api_version}"
 	},
 	"suggests": {
 		"another-mod": "*"
