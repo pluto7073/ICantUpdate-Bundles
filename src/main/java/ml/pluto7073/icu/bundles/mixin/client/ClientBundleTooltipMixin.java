@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
-import java.util.Objects;
 
 @Mixin(ClientBundleTooltip.class)
 @Debug(export = true)
@@ -40,6 +38,7 @@ public abstract class ClientBundleTooltipMixin {
             BundlesOfBravery.asId("textures/container/bundle/slot_highlight_front.png");
 
     @Unique private int icu_bundles$selected = 0;
+    @Unique private boolean icu_bundles$HasSelection = false;
 
     @Unique private int icu_bundles$ItemGridHeight() {
         return gridSizeY() * 24;
@@ -52,6 +51,7 @@ public abstract class ClientBundleTooltipMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void icu_bundles$ReadSelected(BundleTooltip data, CallbackInfo ci) {
         icu_bundles$selected = data instanceof SelectionBundleTooltip sel ? sel.selected() : 0;
+        icu_bundles$HasSelection = data instanceof SelectionBundleTooltip sel && sel.hasSelection();
     }
 
     @ModifyVariable(
@@ -60,8 +60,8 @@ public abstract class ClientBundleTooltipMixin {
             ordinal = 2,
             argsOnly = true
     )
-    private int icu_bundles$SetSelected(int value, @Local ItemStack stack) {
-        if (value == icu_bundles$selected && BundleSelection.hasSelected(stack)) return 0;
+    private int icu_bundles$SetSelected(int value) {
+        if (value == icu_bundles$selected && icu_bundles$HasSelection) return 0;
         return -1;
     }
 
@@ -105,6 +105,16 @@ public abstract class ClientBundleTooltipMixin {
         return BundleUtil.getItemsToShow(items);
     }
 
+    @Unique private void icu_bundles$RenderSelectedTooltip(Font textRenderer, GuiGraphics graphics, int i, int j) {
+        if (!icu_bundles$HasSelection) return;
+
+        ItemStack stack = items.get(icu_bundles$selected);
+        Component component = Component.empty().append(stack.getHoverName()).withStyle(stack.getRarity().color);
+        int l = textRenderer.width(component.getVisualOrderText());
+        int m = i + 96 / 2 - 12;
+        graphics.renderTooltip(textRenderer, component, m - l / 2, j - 15);
+    }
+
     @Inject(method = "renderImage", at = @At("HEAD"), cancellable = true)
     private void icu_bundles$RenderNewBundleUI(Font textRenderer, int x, int y, GuiGraphics graphics, CallbackInfo ci) {
         if (items.isEmpty()) {
@@ -129,6 +139,8 @@ public abstract class ClientBundleTooltipMixin {
                 }
             }
         }
+
+        icu_bundles$RenderSelectedTooltip(textRenderer, graphics, x, y);
         ci.cancel();
     }
 

@@ -53,7 +53,7 @@ public abstract class BundleItemMixin {
             at = @At(value = "NEW", target = "(Lnet/minecraft/core/NonNullList;I)Lnet/minecraft/world/inventory/tooltip/BundleTooltip;")
     )
     private BundleTooltip icu_bundles$SetData(NonNullList<ItemStack> inventory, int bundleOccupancy, @Local(argsOnly = true) ItemStack stack) {
-        return new SelectionBundleTooltip(inventory, bundleOccupancy, BundleSelection.get(stack));
+        return new SelectionBundleTooltip(inventory, bundleOccupancy, BundleSelection.get(stack), BundleSelection.hasSelected(stack));
     }
 
     @ModifyConstant(method = "removeOne", constant = @Constant(intValue = 0))
