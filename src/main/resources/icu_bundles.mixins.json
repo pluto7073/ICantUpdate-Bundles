@@ -3,7 +3,8 @@
   "package": "ml.pluto7073.icu.bundles.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BundleItemMixin"
+    "BundleItemMixin",
+    "DefaultedMappedRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
