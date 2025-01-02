@@ -24,8 +24,10 @@ public class BundleSelection {
 
     public static void add(ItemStack stack, int amount) {
         CompoundTag tag = stack.getTag();
-        int count = tag != null ? Math.max(BundleUtil.getItemsToShow(tag.getList("Items", 10).stream().toList()), 1) : 1;
-        set(stack, Math.floorMod(get(stack) + amount, count));
+        int count = tag != null && tag.contains("Items") ?
+                Math.max(BundleUtil.getItemsToShow(tag.getList("Items", 10).stream().toList()), 1) : 1;
+        int start = (tag == null || !tag.contains(SELECTION_KEY)) && amount > 0 ? -1 : get(stack);
+        set(stack, Math.floorMod(start + amount, count));
     }
 
     public static boolean hasSelected(ItemStack stack) {

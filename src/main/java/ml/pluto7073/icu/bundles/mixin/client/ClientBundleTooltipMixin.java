@@ -1,13 +1,13 @@
 package ml.pluto7073.icu.bundles.mixin.client;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.systems.RenderSystem;
 import ml.pluto7073.icu.bundles.BundleUtil;
 import ml.pluto7073.icu.bundles.BundlesOfBravery;
-import ml.pluto7073.icu.bundles.tooltip.BundleSelection;
 import ml.pluto7073.icu.bundles.tooltip.SelectionBundleTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientBundleTooltip;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -34,8 +34,10 @@ public abstract class ClientBundleTooltipMixin {
 
     @Shadow protected abstract void renderSlot(int x, int y, int index, boolean shouldBlock, GuiGraphics graphics, Font textRenderer);
 
-    @Unique private static final ResourceLocation icu_bundles$SLOT_HIGHLIGHT_FRONT =
-            BundlesOfBravery.asId("textures/container/bundle/slot_highlight_front.png");
+    @Unique private static final ResourceLocation SLOT_HIGHLIGHT_BACK =
+            BundlesOfBravery.asId("textures/container/bundle/slot_highlight_back.png");
+    @Unique private static final ResourceLocation FULLNESS_PROGRESS =
+            BundlesOfBravery.asId("textures/container/bundle/bundle_progress.png");
 
     @Unique private int icu_bundles$selected = 0;
     @Unique private boolean icu_bundles$HasSelection = false;
@@ -94,7 +96,8 @@ public abstract class ClientBundleTooltipMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;renderSlotHighlight(Lnet/minecraft/client/gui/GuiGraphics;III)V")
     )
     private void icu_bundles$RenderSelected(GuiGraphics graphics, int x, int y, int z) {
-        graphics.blit(icu_bundles$SLOT_HIGHLIGHT_FRONT, x - 1, y - 1, 0, 3, 3, 18, 18, 24, 24);
+        graphics.blit(SLOT_HIGHLIGHT_BACK, x - 1, y - 1, 0, 3, 3, 18, 18, 24, 24);
+        AbstractContainerScreen.renderSlotHighlight(graphics, x, y, 0);
     }
 
     @Unique private int icu_bundles$GetAmountOfHiddenItems(List<ItemStack> list) {
@@ -115,8 +118,30 @@ public abstract class ClientBundleTooltipMixin {
         graphics.renderTooltip(textRenderer, component, m - l / 2, j - 15);
     }
 
+    @Unique private void icu_bundles$DrawProgressBar(int x, int y, Font textRenderer, GuiGraphics graphics) {
+        int weight = BundleUtil.getContentWeight(items.stream());
+        boolean full = weight >= 64;
+        int fill = Mth.clamp((94 * weight) / 64, 0, 94);
+        graphics.setColor(1, 1, 1, 1);
+        RenderSystem.enableBlend();
+        RenderSystem.enableDepthTest();
+        if (fill > 0)
+            graphics.blitNineSliced(FULLNESS_PROGRESS, x + 1, y, fill, 13, 2, 6, 6, full ? 6 : 0, 12);
+        graphics.blitNineSliced(FULLNESS_PROGRESS, x, y, 96, 13, 2, 12, 12, 0, 0);
+        Component text = null;
+        if (items.isEmpty()) {
+            text = Component.translatable("bundle.tooltip.empty");
+        } else if (BundleUtil.getContentWeight(items.stream()) >= 64) {
+            text = Component.translatable("bundle.tooltip.full");
+        }
+        if (text != null) {
+            graphics.drawCenteredString(textRenderer, text, x + 48, y + 3, 16777215);
+        }
+    }
+
     @Inject(method = "renderImage", at = @At("HEAD"), cancellable = true)
     private void icu_bundles$RenderNewBundleUI(Font textRenderer, int x, int y, GuiGraphics graphics, CallbackInfo ci) {
+        icu_bundles$DrawProgressBar(x, y + icu_bundles$ItemGridHeight() + 4, textRenderer, graphics);
         if (items.isEmpty()) {
             ci.cancel();
             return;

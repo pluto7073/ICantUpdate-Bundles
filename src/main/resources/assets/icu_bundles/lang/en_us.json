@@ -1,3 +1,5 @@
 {
-  "item.minecraft.bundle.empty.description": "Can hold a mixed stack of items"
+  "item.minecraft.bundle.empty.description": "Can hold a mixed stack of items",
+  "bundle.tooltip.empty": "Empty",
+  "bundle.tooltip.full": "Full"
 }

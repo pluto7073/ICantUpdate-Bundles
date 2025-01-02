@@ -100,7 +100,7 @@ public abstract class BundleItemMixin {
             at = @At("RETURN")
     )
     private int icu_bundles$FixBarColor(int original, ItemStack stack) {
-        return getContentWeight(stack) == 64 ? FULL_BAR_COLOR : original;
+        return getContentWeight(stack) >= 64 ? FULL_BAR_COLOR : original;
     }
 
 }
