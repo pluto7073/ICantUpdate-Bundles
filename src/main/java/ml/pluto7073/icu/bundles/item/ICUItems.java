@@ -7,13 +7,19 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class ICUItems {
 
+    public static final Map<ResourceLocation, Item> BUNDLES = new HashMap<>();
+
     private static <T extends Item> T register(String id, T item) {
-        return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(id), item);
+        ResourceLocation itemId = new ResourceLocation(id);
+        BUNDLES.put(itemId, item);
+        return Registry.register(BuiltInRegistries.ITEM, itemId, item);
     }
 
     private static BundleItem register(String id) {

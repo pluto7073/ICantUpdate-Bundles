@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Mixin(BundleItem.class)
-@Debug(export = true)
 public abstract class BundleItemMixin {
 
     @Unique private static final MutableComponent icu_bundles$BUNDLE_EMPTY_DESC =

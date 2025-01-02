@@ -21,6 +21,9 @@
 		],
 		"client": [
 			"ml.pluto7073.icu.bundles.client.BundlesOfClient"
+		],
+		"fabric-datagen": [
+			"ml.pluto7073.icu.bundles.data.BundlesOfData"
 		]
 	},
 	"mixins": [

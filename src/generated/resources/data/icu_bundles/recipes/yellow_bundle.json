@@ -1,0 +1,16 @@
+{
+  "type": "icu_bundles:dying_shapeless",
+  "category": "equipment",
+  "group": "bundles",
+  "ingredients": [
+    {
+      "tag": "icu_bundles:bundles"
+    },
+    {
+      "item": "minecraft:yellow_dye"
+    }
+  ],
+  "result": {
+    "item": "minecraft:yellow_bundle"
+  }
+}

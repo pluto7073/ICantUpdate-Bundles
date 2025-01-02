@@ -25,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(ClientBundleTooltip.class)
-@Debug(export = true)
 public abstract class ClientBundleTooltipMixin {
 
     @Shadow protected abstract int gridSizeY();

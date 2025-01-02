@@ -2,3 +2,10 @@ accessWidener v2 named
 
 accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen findSlot (DD)Lnet/minecraft/world/inventory/Slot;
 accessible method net/minecraft/world/item/BundleItem getWeight (Lnet/minecraft/world/item/ItemStack;)I
+accessible field net/minecraft/data/recipes/ShapelessRecipeBuilder advancement Lnet/minecraft/advancements/Advancement$Builder;
+accessible method net/minecraft/data/recipes/ShapelessRecipeBuilder ensureValid (Lnet/minecraft/resources/ResourceLocation;)V
+accessible field net/minecraft/data/recipes/ShapelessRecipeBuilder result Lnet/minecraft/world/item/Item;
+accessible field net/minecraft/data/recipes/ShapelessRecipeBuilder count I
+accessible field net/minecraft/data/recipes/ShapelessRecipeBuilder group Ljava/lang/String;
+accessible field net/minecraft/data/recipes/ShapelessRecipeBuilder category Lnet/minecraft/data/recipes/RecipeCategory;
+accessible field net/minecraft/data/recipes/ShapelessRecipeBuilder ingredients Ljava/util/List;
