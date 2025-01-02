@@ -1,14 +1,17 @@
-# Fabric Example Mod
+A mod that backports the features of Bundles of Bravery (1.21.2) to 1.20.1.
 
-## Extra Things
+## Backported Features
+- New Bundle UI
+- Item Selection within Bundle
+- Durability bar of bundle turns red when full
+- Dyable bundles
+- Updated bundle recipe
+- Bundle Feature is now enabled by default so enabling it on world creation is not required
 
-Other than standard Fabric API stuff, this has recipe viewer implementation, a few Dev Env mods, an example Test Mod, Datagen setup,
-and Mojang Mappings with a little quilt on the side.  Oh and Parchment
+## Differences
+- Bundle textures remain unchanged
+- Selected item will be selected until an item is either removed or added to the bundle, at which point it will be reset
+- When you scroll the bundle selection in the creative inventory it also scrolls the current tab (bug?)
 
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the MIT license. Feel free to learn from it and incorporate it in your own projects.
+## Credits
+- Based on [Bundle Backport-ish](https://modrinth.com/mod/bundle-backportish) by [The Potato Archivist](https://modrinth.com/user/ThePotatoArchivist) (MIT)
