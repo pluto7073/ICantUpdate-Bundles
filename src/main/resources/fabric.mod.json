@@ -13,7 +13,7 @@
 	},
 	"license": "MIT",
 	"icon": "assets/icu_bundles/icon.png",
-	"accesswidener": "icu_bundles.accesswidener",
+	"accessWidener": "icu_bundles.accesswidener",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
