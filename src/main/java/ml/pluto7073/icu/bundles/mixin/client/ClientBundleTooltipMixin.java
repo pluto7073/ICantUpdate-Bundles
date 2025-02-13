@@ -125,7 +125,7 @@ public abstract class ClientBundleTooltipMixin {
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
         if (fill > 0)
-            graphics.blitNineSliced(FULLNESS_PROGRESS, x + 1, y, fill, 13, 2, 6, 6, full ? 6 : 0, 12);
+            graphics.blitNineSliced(FULLNESS_PROGRESS, x + 1, y, fill > 1 ? fill : 2, 13, 2, 6, 6, full ? 6 : 0, 12);
         graphics.blitNineSliced(FULLNESS_PROGRESS, x, y, 96, 13, 2, 12, 12, 0, 0);
         Component text = null;
         if (items.isEmpty()) {
