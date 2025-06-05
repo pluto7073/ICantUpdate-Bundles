@@ -40,6 +40,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	// Bug Fixes
+	modCompileOnly("maven.modrinth:mouse-tweaks:$mouse_tweaks_version")
+	//modLocalRuntime("maven.modrinth:mouse-tweaks:$mouse_tweaks_version")
+
 	// Dev Env
 	modLocalRuntime("maven.modrinth:suggestion-tweaker:$suggestion_tweaker_version")
 	modLocalRuntime("maven.modrinth:cloth-config:$cloth_config_version") { exclude(group: "net.fabricmc.fabric-api") }

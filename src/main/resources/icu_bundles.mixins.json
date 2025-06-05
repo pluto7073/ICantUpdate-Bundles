@@ -5,7 +5,8 @@
   "mixins": [
     "BundleItemMixin",
     "DefaultedMappedRegistryMixin",
-    "FeatureFlagsMixin"
+    "FeatureFlagsMixin",
+    "mousetweaks.MainMixin"
   ],
   "injectors": {
     "defaultRequire": 1
