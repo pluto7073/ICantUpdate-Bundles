@@ -16,6 +16,9 @@ public class DefaultedMappedRegistryMixin {
             argsOnly = true
     )
     private ResourceLocation icu_bundles$ConvertFromBundleBackport(ResourceLocation id) {
+        if (id == null) {
+            return null;
+        }
         if (id.getNamespace().equals("bundle-backportish")) {
             return new ResourceLocation(id.getPath());
         }
